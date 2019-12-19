@@ -8,12 +8,12 @@ parameters:
   ArtifactName: 'drop-nuget'
   DoEsrp: 'false'
   DoTestCoverage: 'false'
-  BuildArch: 'x64'
-  SetVcvars: 'false'
-  msbuildArchitecture: 'amd64'
+  BuildArch: 'x64' # Optional. Options: x86, x64
+  msbuildArchitecture: 'amd64' # Options: x86, amd64
+  sln_platform: 'x64' # Options: Win32, x64
   EnvSetupScript: 'setup_env.bat'
   CudaVersion: ''
-  AgentPool: 'Win-CPU'
+  AgentPool: 'Win-CPU-2019'
   AgentDemands: []
   OrtPackageId: Microsoft.ML.OnnxRuntime
 jobs:
@@ -30,6 +30,9 @@ jobs:
     OnnxRuntimeBuildDirectory: '$(Build.BinariesDirectory)'
     DotNetExe: 'dotnet.exe'
     CUDA_VERSION: ${{ parameters.CudaVersion }}
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+    PlatformTarget: ${{ parameters.BuildArch }}
+    RuntimeIdentifier: win-${{ parameters.BuildArch }}
 
   steps:
     - powershell: |
@@ -71,7 +74,7 @@ jobs:
       displayName: 'Build'
       inputs:
         solution: '$(Build.BinariesDirectory)\RelWithDebInfo\onnxruntime.sln'
-        platform: 'x64'
+        platform: ${{ parameters.sln_platform }}
         configuration: RelWithDebInfo
         msbuildArchitecture: ${{ parameters.BuildArch }}
         maximumCpuCount: true

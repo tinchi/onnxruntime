@@ -18,5 +18,5 @@ variables:
 jobs:
 - template: templates/cpu-nocontribops-arm64.yml
   parameters:
-    AgentPool : $(AgentPoolWin)
+    AgentPool : 'Win-CPU-2019'
     DoEsrp: 'true'
