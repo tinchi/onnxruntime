@@ -38,12 +38,9 @@ jobs:
         arguments: --test_data_url $(TestDataUrl) --build_dir $(Build.BinariesDirectory)
         workingDirectory: $(Build.BinariesDirectory)
 
-    - task: CmdLine@1
-      continueOnError: true
+
+    - powershell: 'Start-Process -FilePath "$(Build.BinariesDirectory)\installer\opencppcoverage\installer.exe" -ArgumentList ''/SP-'', ''/VERYSILENT'', ''/SUPPRESSMSGBOXES'', ''/NORESTART'', ''/DIR="$(Build.BinariesDirectory)\OpenCppCoverage'' -NoNewWindow -Wait'
       displayName: 'Run OpenCPPCoverage installer'
-      inputs:
-        filename: '$(Build.BinariesDirectory)\installer\opencppcoverage\installer.exe'
-        arguments: '/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR="$(Build.BinariesDirectory)\OpenCppCoverage"'
 
     - task: PythonScript@0
       displayName: 'Generate cmake config'
