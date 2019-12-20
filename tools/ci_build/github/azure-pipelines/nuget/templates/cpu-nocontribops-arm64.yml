@@ -50,7 +50,7 @@ parameters:
 
 - template: ../../templates/win-ci-arm.yml
   parameters:
-    AgentPool : $(AgentPoolWin)
+    AgentPool : 'Win-CPU-2019'
     JobName: 'Windows_Arm64_Dev'
     BuildCommand:  '$(Build.SourcesDirectory)\tools\ci_build\build.py --build_dir $(Build.BinariesDirectory) --skip_submodule_sync --cmake_path $(Build.BinariesDirectory)\cmake\bin\cmake.exe --ctest_path $(Build.BinariesDirectory)\cmake\bin\ctest.exe --disable_contrib_ops --enable_msvc_static_runtime --build_shared_lib --arm64'
     DoDebugBuild: 'false'
@@ -131,7 +131,7 @@ parameters:
 - job: NuGet_Packaging
   workspace:
     clean: all
-  pool: $(AgentPoolWin)
+  pool: 'Win-CPU-2019'
   dependsOn:
   - Windows_CI_Dev
   - Windows_CI_Dev_x86
