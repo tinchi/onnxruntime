@@ -14,11 +14,11 @@ TEST(ConfigParsingTests, AllArgs) {
   char* test_argv[] = {
       const_cast<char*>("/path/to/binary"),
       const_cast<char*>("--model_path"), const_cast<char*>("testdata/mul_1.onnx"),
-      const_cast<char*>("--model_name"), const_cast<char*>("mul_1"),
-      const_cast<char*>("--model_version"), const_cast<char*>("1"),
       const_cast<char*>("--address"), const_cast<char*>("4.4.4.4"),
       const_cast<char*>("--http_port"), const_cast<char*>("80"),
-      const_cast<char*>("--num_http_threads"), const_cast<char*>("1"),
+      // const_cast<char*>("--num_http_threads"), const_cast<char*>("10"),
+      const_cast<char*>("--model_name"), const_cast<char*>("mul_1"),
+      const_cast<char*>("--model_version"), const_cast<char*>("1"),
       const_cast<char*>("--log_level"), const_cast<char*>("info")};
 
   onnxruntime::server::ServerConfiguration config{};
@@ -29,7 +29,7 @@ TEST(ConfigParsingTests, AllArgs) {
   EXPECT_EQ(config.model_version, "1");
   EXPECT_EQ(config.address, "4.4.4.4");
   EXPECT_EQ(config.http_port, 80);
-  EXPECT_EQ(config.num_http_threads, 1);
+  // EXPECT_EQ(config.num_http_threads, 10);
   EXPECT_EQ(config.logging_level, ORT_LOGGING_LEVEL_INFO);
 }
 
